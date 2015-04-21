@@ -11,10 +11,10 @@ exp = setup_exp(exp);
 exp = add_stimuli_fn(exp);
 
 % Then, start psychtoolbox and load stimuli
-[exp, textures, rects] = load_stimuli(exp);
+[exp, psy] = load_stimuli(exp);
 
 % Then, loop through the trials
-res = loop_trials(exp, textures, rects);
+res = loop_trials(exp, psy);
 
 % Save res and experiment details
 
