@@ -2,6 +2,8 @@ function exp = setup_exp(varargin)
 %SETUP_EXP sets up default parameters for the experiment
 if nargin == 0
     exp = struct();
+else
+    exp = varargin{1};
 end
 
 % setup directories variables

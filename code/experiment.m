@@ -8,7 +8,8 @@ exp.run.blocknr = blocknr;
 exp = setup_exp(exp);
 
 % Then, load the stimuli file
-exp = load_stimuli_fn(exp);
+exp = add_stimuli_fn(exp);
+
 % Then, start psychtoolbox and load stimuli
 [exp, textures, rects] = load_stimuli(exp);
 
@@ -18,4 +19,3 @@ res = loop_trials(exp, textures, rects);
 % Save res and experiment details
 
 end
-
