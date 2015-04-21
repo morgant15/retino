@@ -11,7 +11,7 @@ try
        nstimuli = length(stimuli);
        for k = 1:nstimuli
           this_stim = stimuli{k};
-          field_stim = this_stim(1:regexp(this_stim, '\.[A-Za-z]+')-1);
+          field_stim = regexp(this_stim, '[A-Za-z0-9_-]+', 'match', 'once');
           
           img = imread(fullfile(exp.dir.stim, this_stim));
           psy.textures.(field_stim) = Screen('MakeTexture', psy.expWin, img);
