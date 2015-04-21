@@ -22,7 +22,7 @@ try
     n_pos_deg = length(exp.stim.pos_deg);
     n_angles = round(2*pi/exp.stim.pos_rot);
     psy.rects = cell([n_pos_deg, n_angles]);
-    centerRect = CenterRectOnPoint([0 0 exp.stim.size_pix], mx, my);
+    centerRect = CenterRectOnPoint([0 0 exp.stim.size_pix], psy.mx, psy.my);
     for ipos = 1:n_pos_deg
         for kangle = 1:n_angles
             x_offset = round(exp.stim.pos_deg(ipos) * ...
@@ -34,6 +34,9 @@ try
                                  psy.my - y_offset);
         end
     end
+    % make rect for fixation
+    psy.rect_fix = CenterRectOnPoint([0 0 exp.stim.fixcross_size_pix], ...
+        psy.mx, psy.my);
 catch
     ShowCursor;
     Screen('CloseAll');
