@@ -10,8 +10,10 @@ exp = setup_exp(exp);
 % Then, load the stimuli file
 exp = add_stimuli_fn(exp);
 
-% Then, start psychtoolbox and load stimuli
-[exp, psy] = load_stimuli(exp);
+% Then, start psychtoolbox
+[exp, psy] = open_psychtoolbox(exp);
+% load stimuli
+[exp, psy] = load_stimuli(exp, psy);
 
 % Then, loop through the trials
 res = loop_trials(exp, psy);

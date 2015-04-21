@@ -16,6 +16,7 @@ exp.dir.res = fullfile(fileparts(curdir), 'res');
 
 % debug?
 exp.cfg.debug = 0;
+exp.cfg.csv_struct = '%s%s%s%s%s%s%s%s';  %TODO: fix this accordingly
 
 % setup experiment
 % screen setup
