@@ -37,6 +37,8 @@ try
     % make rect for fixation
     psy.rect_fix = CenterRectOnPoint([0 0 exp.stim.fixcross_size_pix], ...
         psy.mx, psy.my);
+    % center rect
+    psy.center_rect = centerRect;
 catch
     ShowCursor;
     Screen('CloseAll');
