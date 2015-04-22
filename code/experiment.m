@@ -20,7 +20,8 @@ res = loop_trials(exp, psy);
 
 % Save res and experiment details
 fnout = save_res(res, exp);
-
 fprintf('Saved results in %s\n', fnout);
 
+% cleanup
+cleanup(psy);
 end

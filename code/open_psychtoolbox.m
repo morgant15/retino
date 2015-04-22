@@ -8,9 +8,10 @@ try
     else
         screenNumber = min(screens);
     end
+    psy.screen.number = screenNumber;
     
     % open screen
-    exp.screen.old_res = SetResolution(screenNumber, ...
+    psy.screen.old_res = SetResolution(screenNumber, ...
                                        exp.screen.resolution(1), ...
                                        exp.screen.resolution(2), ...
                                        exp.screen.resolution(3));
@@ -19,11 +20,7 @@ try
     
     % get midpoints of screen
     [psy.mx, psy.my] = RectCenter(psy.expRect);
-catch
-    ShowCursor;
-    Screen('CloseAll');
-    psychrethrow(psychlasterror);
-    SetResolution(screenNumber, exp.screen.old_res);
-    ListenChar(0);
+catch exception
+    cleanup(psy, exception);
 end
 end

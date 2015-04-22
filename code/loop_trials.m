@@ -49,8 +49,8 @@ try
     header_res = [header, 'rt', 'response'];
     res = [blockInfo, num2cell([rts, response])];
     res = [header_res; res];
-catch
-    cleanup();
+catch exception
+    cleanup(psy, exception);
 end
 end
 

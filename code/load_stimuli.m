@@ -39,12 +39,8 @@ try
         psy.mx, psy.my);
     % center rect
     psy.center_rect = centerRect;
-catch
-    ShowCursor;
-    Screen('CloseAll');
-    psychrethrow(psychlasterror);
-    SetResolution(screenNumber, exp.screen.old_res);
-    ListenChar(0);
+catch exception
+    cleanup(psy, exception);
 end
 end
 
