@@ -50,7 +50,7 @@ try
     res = [blockInfo, num2cell([rts, response])];
     res = [header_res; res];
 catch exception
-    cleanup(psy, exception);
+    cleanup(psy);
 end
 end
 
