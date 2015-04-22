@@ -19,5 +19,8 @@ exp = add_stimuli_fn(exp);
 res = loop_trials(exp, psy);
 
 % Save res and experiment details
+fnout = save_res(res, exp);
+
+fprintf('Saved results in %s\n', fnout);
 
 end
