@@ -2,7 +2,7 @@ function [exp, psy] = load_stimuli(exp, psy)
 %LOAD_STIMULI loads textures and creating rects, and returns a structure
 %psy containing the textures and the rects to be used later.
 try
-    # require glob
+    % require glob
     fns = sort(glob(exp.dir.stim))
     nfns = length(fns)
     % make textures
