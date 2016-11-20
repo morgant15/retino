@@ -1,0 +1,5 @@
+theta,morph
+0,0
+
+possible thetas: 0-7
+possible morphs: 0, 17, 33, 50, 67, 83, 100

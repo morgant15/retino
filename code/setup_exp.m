@@ -47,7 +47,7 @@ exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
 exp.stim.size_deg = [3 3];
 exp.stim.pos_deg = [2 4 7];
 exp.stim.fixcross_size_deg = [1.5 1.5];
-exp.stim.pos_rot = pi/3;  % position of the stimuli in radians
+exp.stim.pos_rot = pi/4;  % position of the stimuli in radians
 % convert sizes in pixels
 exp.stim.size_pix = round(exp.screen.deg2p * ...
                           exp.stim.size_deg);
