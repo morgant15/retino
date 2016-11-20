@@ -1,5 +1,6 @@
 function res = loop_trials(exp, psy)
 %LOOP_TRIALS does what it says
+spacebar_code = KbName('spacebar')
 
 try
     % first, load the trial order
@@ -9,17 +10,10 @@ try
     blockInfo = textscan(fid, exp.csv.struct, 'delimiter', ',');
     blockInfo = horzcat(blockInfo{:});
     fclose(fid);
-    
-    % prepare a cell containing the field names that will be used as fieldnames
-    % for cues and targets
-    cues = blockInfo{:, exp.csv.cue_col};
-    targets = blockInfo{:, exp.csv.targets_col};
-    field_cues = regexp(cues, '[A-Za-z0-9_-]+', 'match', 'once');
-    field_targets = regexp(targets, '[A-Za-z0-9_-]+', 'match', 'once');
-    
+
     % display some greetings here
-    display_greetings(psy.expWin, exp.cfg.msg_start);
-    
+    show_text(psy.expWin, exp.cfg.msg_start, 1);
+
     % loop through trials
     ntrials = length(blockInfo);
     rts = zeros([ntrials, 1]);
@@ -27,24 +21,22 @@ try
     for itrial = 1:length(blockInfo)
         % get some info on this trial
         trial = blockInfo(itrial, :);
-        trial_pos = find(str2double(trial{exp.csv.pos_col}) == ...
-            exp.stim.pos_deg);
+        % trial_pos = find(str2double(trial{exp.csv.pos_col}) == ...
+        %    exp.stim.pos_deg);
         trial_angle = str2double(trial{exp.csv.angle_col});
+        % 0. wait for subject's space bar
+        wait_response(psy.expWin, psy.rect_fix, spacebar_code)
         % 1. fixation
         fixation(psy.expWin, psy.rect_fix, exp.time.fix_f);
-        % 2. cue
-        show_stim(psy.expWin, psy.textures.(field_cues{itrial}), ...
-                  psy.center_rect, exp.time.cue_f)
-        % 3. delay
-        fixation(psy.expWin, psy.rect_fix, exp.time.interval_f);
-        % 4. target
+        % 2. flash stimulus
         show_stim(psy.expWin, psy.textures.(field_targets{itrial}), ...
-            psy.rects{trial_pos, trial_angle}, exp.time.tar_f)
-        % 5. fixation and wait for response       
+            psy.rects{trial_pos, trial_angle}, exp.time.stim_f)
+        % 3. wait for response
+        show_text(psy.expWin, exp.cfg.msg_response, 0)
         [rts(itrial), response(itrial)] = ...
             wait_response(psy.expWin, psy.rect_fix, exp.cfg.button_ids);
     end % for itrial
-    
+
     % save results
     header_res = [header, 'rt', 'response'];
     res = [blockInfo, num2cell([rts, response])];
@@ -54,14 +46,16 @@ catch exception
 end
 end
 
-function display_greetings(expWin, msg)
+function show_text(expWin, msg, wait)
     Screen('TextSize', expWin, 18);
     DrawFormattedText(expWin, msg, 'center', 'center');
     Screen('Flip', expWin);
-    WaitSecs(1);
-    KbWait([], 3);
-    Screen('Flip', expWin);
-end % display_greetings
+    if wait
+      WaitSecs(1);
+      KbWait([], 3);
+      Screen('Flip', expWin);
+    end
+end % show_test
 
 function fixation(expWin, rect_fix, duration_flip)
 % draw fixation point for duration_flip

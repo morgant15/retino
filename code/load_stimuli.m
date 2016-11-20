@@ -2,20 +2,17 @@ function [exp, psy] = load_stimuli(exp, psy)
 %LOAD_STIMULI loads textures and creating rects, and returns a structure
 %psy containing the textures and the rects to be used later.
 try
-    % load stimuli file and add textures to the psy struct
-    stimuli_fn = {'fam_cue', 'fam_tar', 'unk_cue', 'unk_tar'};
-    nstimuli_fn = length(stimuli_fn);
+    # require glob
+    fns = sort(glob(exp.dir.stim))
+    nfns = length(fns)
     % make textures
-    for i = 1:nstimuli_fn
+    psy.textures = {}
+    psy.textures_name = fns
+    for i = 1:nfns
        stimuli = txt2cell(exp.run.(stimuli_fn{i}));
        nstimuli = length(stimuli);
-       for k = 1:nstimuli
-          this_stim = stimuli{k};
-          field_stim = regexp(this_stim, '[A-Za-z0-9_-]+', 'match', 'once');
-          
-          img = imread(fullfile(exp.dir.stim, this_stim));
-          psy.textures.(field_stim) = Screen('MakeTexture', psy.expWin, img);
-       end
+       img = imread(fullfile(exp.dir.stim, this_stim));
+       psy.textures.{i} = Screen('MakeTexture', psy.expWin, img);
     end
     % make rects -- it's gonna be a cell where rows are the distances from
     % fixation and the columns are angles
@@ -43,4 +40,3 @@ catch exception
     cleanup(psy, exception);
 end
 end
-

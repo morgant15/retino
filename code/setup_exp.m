@@ -20,6 +20,7 @@ exp.cfg.key_yes = KbName('LeftArrow');
 exp.cfg.key_no = KbName('RightArrow');
 exp.cfg.button_ids = [exp.cfg.key_yes, exp.cfg.key_no];
 exp.cfg.msg_start = ['BLABLABLA MY MESSAGE TO YOU'];
+exp.cfg.msg_response = ['Left: Identity A \t\t\t Right: Identity B']
 
 % CSV storing trial info
 exp.csv.struct = '%s%s%s%s%s%s%s%s';  %TODO: fix this accordingly
@@ -45,7 +46,7 @@ exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
                              exp.screen.resolution(1));
 % stimuli position
 exp.stim.size_deg = [3 3];
-exp.stim.pos_deg = [2 4 7];
+exp.stim.pos_deg = [7];
 exp.stim.fixcross_size_deg = [1.5 1.5];
 exp.stim.pos_rot = pi/4;  % position of the stimuli in radians
 % convert sizes in pixels
@@ -61,10 +62,7 @@ exp.stim.fixcross_size_pix = round(exp.screen.deg2p * ...
 exp.time.fix_s = 0.5;
 exp.time.min_jitter_s = 0;
 exp.time.max_jitter_s = 0;
-exp.time.cue_s = 0.05;
-exp.time.interval_s = 0.1;
-exp.time.tar_s = 0.05;
-exp.time.delay_question_s = 0.25;  % question delay
+exp.time.stim_s = 0.05
 
 % convert time in flips
 exp.time.fix_f = round(exp.time.fix_s * exp.screen.actual_refresh);
@@ -72,15 +70,6 @@ exp.time.min_jitter_f = round(exp.time.min_jitter_s * ...
                               exp.screen.actual_refresh);
 exp.time.max_jitter_f = round(exp.time.max_jitter_s * ...
                               exp.screen.actual_refresh);
-exp.time.cue_f = round(exp.time.cue_s * ...
-                       exp.screen.actual_refresh);   
-exp.time.interval_f = round(exp.time.interval_s * ...
-                            exp.screen.actual_refresh);  
-exp.time.tar_f = round(exp.time.tar_s * ...
-                       exp.screen.actual_refresh);
-exp.time.delay_question_f = round(exp.time.delay_question_s * ...
-                                  exp.screen.actual_refresh);
-
-
+exp.time.stim_f = round(exp.time.stim_s * ...
+                        exp.screen.actual_refresh)
 end
-
