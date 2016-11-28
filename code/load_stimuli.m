@@ -3,16 +3,16 @@ function [exp, psy] = load_stimuli(exp, psy)
 %psy containing the textures and the rects to be used later.
 try
     % require glob
-    fns = sort(glob(exp.dir.stim))
-    nfns = length(fns)
+    fns = sort(glob(exp.dir.stim));
+    nfns = length(fns);
     % make textures
-    psy.textures = {}
-    psy.textures_name = fns
+    psy.textures = {};
+    psy.textures_name = fns;
     for i = 1:nfns
        stimuli = txt2cell(exp.run.(stimuli_fn{i}));
        nstimuli = length(stimuli);
        img = imread(fullfile(exp.dir.stim, this_stim));
-       psy.textures.{i} = Screen('MakeTexture', psy.expWin, img);
+       psy.textures{i} = Screen('MakeTexture', psy.expWin, img);
     end
     % make rects -- it's gonna be a cell where rows are the distances from
     % fixation and the columns are angles

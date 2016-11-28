@@ -62,7 +62,7 @@ exp.stim.fixcross_size_pix = round(exp.screen.deg2p * ...
 exp.time.fix_s = 0.5;
 exp.time.min_jitter_s = 0;
 exp.time.max_jitter_s = 0;
-exp.time.stim_s = 0.05
+exp.time.stim_s = 0.05;
 
 % convert time in flips
 exp.time.fix_f = round(exp.time.fix_s * exp.screen.actual_refresh);
@@ -71,5 +71,5 @@ exp.time.min_jitter_f = round(exp.time.min_jitter_s * ...
 exp.time.max_jitter_f = round(exp.time.max_jitter_s * ...
                               exp.screen.actual_refresh);
 exp.time.stim_f = round(exp.time.stim_s * ...
-                        exp.screen.actual_refresh)
+                        exp.screen.actual_refresh);
 end

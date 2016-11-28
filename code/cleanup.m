@@ -14,5 +14,3 @@ if nargin > 1
     SetResolution(psy.screen.number, psy.screen.old_res);
 end
 ListenChar(0);
-
-throw(exception);

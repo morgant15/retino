@@ -1,6 +1,6 @@
 function res = loop_trials(exp, psy)
 %LOOP_TRIALS does what it says
-spacebar_code = KbName('spacebar')
+spacebar_code = KbName('spacebar');
 
 try
     % first, load the trial order
@@ -30,7 +30,7 @@ try
         fixation(psy.expWin, psy.rect_fix, exp.time.fix_f);
         % 2. flash stimulus
         show_stim(psy.expWin, psy.textures.(field_targets{itrial}), ...
-            psy.rects{trial_pos, trial_angle}, exp.time.stim_f)
+            psy.rects{trial_pos, trial_angle}, exp.time.stim_f);
         % 3. wait for response
         show_text(psy.expWin, exp.cfg.msg_response, 0)
         [rts(itrial), response(itrial)] = ...
@@ -43,6 +43,7 @@ try
     res = [header_res; res];
 catch exception
     cleanup(psy);
+    throw(exception);
 end
 end
 
