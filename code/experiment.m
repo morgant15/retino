@@ -7,8 +7,6 @@ exp.run.blocknr = blocknr;
 % First, setup experimental variables, return a structure with the defaults
 exp = setup_exp(exp);
 
-
-
 % Then, start psychtoolbox
 [exp, psy] = open_psychtoolbox(exp);
 % load stimuli

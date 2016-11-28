@@ -19,8 +19,9 @@ exp.cfg.debug = 0;
 exp.cfg.key_yes = KbName('LeftArrow');
 exp.cfg.key_no = KbName('RightArrow');
 exp.cfg.button_ids = [exp.cfg.key_yes, exp.cfg.key_no];
-exp.cfg.msg_start = ['BLABLABLA MY MESSAGE TO YOU'];
-exp.cfg.msg_response = ['Left: Identity A \t\t\t Right: Identity B'];
+exp.cfg.msg_start = ['Before each trial, press the space bar when you are ready.\n', ...
+                     'Use the left arrow key for Identity A, the right arrow key for Identity B'];
+exp.cfg.msg_response = ['Left: Identity A     Right: Identity B'];
 
 % setup for blocks
 exp.cfg.angle_pos = 0:7;
@@ -57,7 +58,7 @@ exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
 % stimuli position
 exp.stim.size_deg = [3 3];
 exp.stim.ecc_deg = exp.cfg.ecc_deg;
-exp.stim.fixcross_size_deg = [1.5 1.5];
+exp.stim.fixcross_size_deg = [1 1];
 exp.stim.pos_rot = pi/4;  % position of the stimuli in radians
 % convert sizes in pixels
 exp.stim.size_pix = round(exp.screen.deg2p * ...

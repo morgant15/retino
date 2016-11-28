@@ -1,6 +1,10 @@
 function res = loop_trials(exp, psy)
 %LOOP_TRIALS does what it says
-spacebar_code = KbName('spacebar');
+spacebar_code = KbName('space');
+
+morph_col = 2;
+angle_col = 3;
+% ecc_col = 4;
 
 try
     % first, load the trial order
@@ -17,20 +21,21 @@ try
     for itrial = 1:length(blockInfo)
         % get some info on this trial
         trial = blockInfo(itrial, :);
+        % get field name to load texture
+        this_fieldname = sprintf('t%03d', trial{morph_col});
         % trial_pos = find(str2double(trial{exp.csv.pos_col}) == ...
         %    exp.stim.pos_deg);
-        trial_angle = str2double(trial{exp.csv.angle_col});
+        trial_angle = trial{angle_col} + 1;
         % 0. wait for subject's space bar
-        wait_response(psy.expWin, psy.rect_fix, spacebar_code)
-        % 1. fixation
-        fixation(psy.expWin, psy.rect_fix, exp.time.fix_f);
+        fixation(psy.expWin, psy.rect_fix, 0, spacebar_code)
+        % 1. fixation 
+            fixation(psy.expWin, psy.rect_fix, exp.time.fix_f);
         % 2. flash stimulus
-        show_stim(psy.expWin, psy.textures.(field_targets{itrial}), ...
-            psy.rects{trial_pos, trial_angle}, exp.time.stim_f);
+        show_stim(psy.expWin, psy.textures.(this_fieldname), ...
+            psy.rects{trial_angle}, exp.time.stim_f);
         % 3. wait for response
-        show_text(psy.expWin, exp.cfg.msg_response, 0)
         [rts(itrial), response(itrial)] = ...
-            wait_response(psy.expWin, psy.rect_fix, exp.cfg.button_ids);
+            wait_response_text(psy.expWin, exp.cfg.msg_response, exp.cfg.button_ids);
     end % for itrial
 
     % save results
@@ -38,7 +43,7 @@ try
     res = [blockInfo, num2cell([rts, response])];
     res = [header_res; res];
 catch exception
-    cleanup(psy);
+    %cleanup(psy);
     throw(exception);
 end
 end
@@ -54,33 +59,45 @@ function show_text(expWin, msg, wait)
     end
 end % show_test
 
-function fixation(expWin, rect_fix, duration_flip)
+function fixation(expWin, rect_fix, duration_flip, button_ids)
 % draw fixation point for duration_flip
 draw_fixation_circle(expWin, rect_fix);
 Screen('Flip', expWin);
-for kflip = 2:duration_flip
-    draw_fixation_circle(expWin, rect_fix);
-    Screen('Flip', expWin);
+if duration_flip > 0
+    for kflip = 2:duration_flip
+        draw_fixation_circle(expWin, rect_fix);
+        Screen('Flip', expWin);
+    end
+else
+    [~, ~, keyCode] = KbCheck;
+    while ~any(keyCode(button_ids))
+        draw_fixation_circle(expWin, rect_fix);
+        Screen('Flip', expWin);
+        [~, ~, keyCode] = KbCheck;
+    end
 end
 end % fixation
 
 function show_stim(expWin, texture, rect, duration_flip)
-Screen('DrawTexture', expWin, texture, rect);
+Screen('DrawTexture', expWin, texture, [], rect);
 Screen('Flip', expWin);
 for kflip = 2:duration_flip
-    Screen('DrawTexture', expWin, texture, rect);
+    Screen('DrawTexture', expWin, texture, [], rect);
     Screen('Flip', expWin);
 end
+Screen('Flip', expWin);
 end % show_stim
 
-function [rt, response] = wait_response(expWin, rect_fix, button_ids)
-fixation(expWin, rect_fix, 1);
+function [rt, response] = wait_response_text(expWin, msg, button_ids)
+DrawFormattedText(expWin, msg, 'center', 'center');
+Screen('Flip', expWin);
 [~, t0, keyCode] = KbCheck;
 while ~any(keyCode(button_ids))
-    fixation(expWin, rect_fix, 1);
+    DrawFormattedText(expWin, msg, 'center', 'center');
+    Screen('Flip', expWin);
     [~, RT, keyCode] = KbCheck;
 end
-
 rt = RT - t0;
 response = find(keyCode);  % we'll figure out later
+Screen('Flip', expWin);
 end
