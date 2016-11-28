@@ -25,7 +25,7 @@ exp.cfg.msg_response = ['Left: Identity A \t\t\t Right: Identity B'];
 % setup for blocks
 exp.cfg.angle_pos = 0:7;
 exp.cfg.morphs = round(linspace(0, 100, 7));
-exp.cfg.pos_deg = 0:45:359;
+exp.cfg.pos_deg = 0:7;  % in radians, pi/4
 exp.cfg.ecc_deg = [7];
 exp.cfg.nrep_in_block = 2;
 % Then, add stimulus name
