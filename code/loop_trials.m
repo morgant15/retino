@@ -4,13 +4,9 @@ spacebar_code = KbName('spacebar');
 
 try
     % first, load the trial order
-    fid = fopen(exp.run.trial_order_fn, 'r');
-    header = textscan(fid, exp.csv.struct, 1, 'delimiter', ',');
-    header = horzcat(header{:});
-    blockInfo = textscan(fid, exp.csv.struct, 'delimiter', ',');
-    blockInfo = horzcat(blockInfo{:});
-    fclose(fid);
-
+    block = make_block(exp.cfg);
+    header = block(1, :);
+    blockInfo = block(2:end, :);
     % display some greetings here
     show_text(psy.expWin, exp.cfg.msg_start, 1);
 

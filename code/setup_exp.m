@@ -10,7 +10,7 @@ end
 myname = mfilename;
 mydir = which(myname);
 curdir = fileparts(mydir);
-exp.dir.csv = fullfile(fileparts(curdir), 'csv');
+%exp.dir.csv = fullfile(fileparts(curdir), 'csv');
 exp.dir.stim = fullfile(fileparts(curdir), 'stim');
 exp.dir.res = fullfile(fileparts(curdir), 'res');
 
@@ -20,14 +20,24 @@ exp.cfg.key_yes = KbName('LeftArrow');
 exp.cfg.key_no = KbName('RightArrow');
 exp.cfg.button_ids = [exp.cfg.key_yes, exp.cfg.key_no];
 exp.cfg.msg_start = ['BLABLABLA MY MESSAGE TO YOU'];
-exp.cfg.msg_response = ['Left: Identity A \t\t\t Right: Identity B']
+exp.cfg.msg_response = ['Left: Identity A \t\t\t Right: Identity B'];
 
+% setup for blocks
+exp.cfg.angle_pos = 0:7;
+exp.cfg.morphs = round(linspace(0, 100, 7));
+exp.cfg.pos_deg = 0:45:359;
+exp.cfg.ecc_deg = [7];
+exp.cfg.nrep_in_block = 2;
+% Then, add stimulus name
+exp.cfg.fn = '%03d.png';  % e.g., 000.png, 050.png, 100.png morphs
+
+% block order is made on the fly
 % CSV storing trial info
-exp.csv.struct = '%s%s%s%s%s%s%s%s';  %TODO: fix this accordingly
-exp.csv.cue_col = 2;
-exp.csv.target_col = 3;
-exp.csv.pos_col = 4;
-exp.csv.angle_col = 5;
+% exp.csv.struct = '%s%s%s%s%s%s%s%s';  %TODO: fix this accordingly
+% exp.csv.cue_col = 2;
+% exp.csv.target_col = 3;
+% exp.csv.pos_col = 4;
+% exp.csv.angle_col = 5;
 
 % setup experiment
 % screen setup
@@ -46,14 +56,14 @@ exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
                              exp.screen.resolution(1));
 % stimuli position
 exp.stim.size_deg = [3 3];
-exp.stim.pos_deg = [7];
+exp.stim.ecc_deg = exp.cfg.ecc_deg;
 exp.stim.fixcross_size_deg = [1.5 1.5];
 exp.stim.pos_rot = pi/4;  % position of the stimuli in radians
 % convert sizes in pixels
 exp.stim.size_pix = round(exp.screen.deg2p * ...
                           exp.stim.size_deg);
-exp.stim.pos_pix = round(exp.screen.deg2p * ...
-                         exp.stim.pos_deg);
+exp.stim.ecc_pix = round(exp.screen.deg2p * ...
+                         exp.stim.ecc_deg);
 exp.stim.fixcross_size_pix = round(exp.screen.deg2p * ...
                                    exp.stim.fixcross_size_deg);
 
