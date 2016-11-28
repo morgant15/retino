@@ -3,11 +3,12 @@ function [exp, psy] = open_psychtoolbox(exp)
 try
     PsychDefaultSetup(1);
     screens = Screen('Screens');
-    if exp.cfg.debug
-        screenNumber = max(screens);
-    else
-        screenNumber = min(screens);
-    end
+    screenNumber = min(screens);
+    %if exp.cfg.debug
+    %    screenNumber = min(screens);
+    %else
+    %    screenNumber = min(screens);
+    %end
     psy.screen.number = screenNumber;
     
     % open screen
@@ -21,6 +22,7 @@ try
     % get midpoints of screen
     [psy.mx, psy.my] = RectCenter(psy.expRect);
 catch exception
-    cleanup(psy, exception);
+    cleanup(psy);
+    throw(exception);
 end
 end

@@ -15,12 +15,13 @@ exp.dir.stim = fullfile(fileparts(curdir), 'stim');
 exp.dir.res = fullfile(fileparts(curdir), 'res');
 
 % CFG
-exp.cfg.debug = 0;
+exp.cfg.debug = 1;
 exp.cfg.key_yes = KbName('LeftArrow');
 exp.cfg.key_no = KbName('RightArrow');
 exp.cfg.button_ids = [exp.cfg.key_yes, exp.cfg.key_no];
 exp.cfg.msg_start = ['Before each trial, press the space bar when you are ready.\n', ...
-                     'Use the left arrow key for Identity A, the right arrow key for Identity B'];
+                     'Use the left arrow key for Identity A, the right arrow key for Identity B\n\n', ...
+                     'Press the space bar to start'];
 exp.cfg.msg_response = ['Left: Identity A     Right: Identity B'];
 
 % setup for blocks
@@ -43,7 +44,7 @@ exp.cfg.fn = '%03d.png';  % e.g., 000.png, 050.png, 100.png morphs
 % setup experiment
 % screen setup
 if strcmp(computer, 'MACI64')
-    exp.screen.resolution = [1024 768 0];
+    exp.screen.resolution = [1440 900 0];
     exp.screen.actual_refresh = 60;
 else
     exp.screen.resolution = [1024 768 60];
@@ -58,7 +59,7 @@ exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
 % stimuli position
 exp.stim.size_deg = [3 3];
 exp.stim.ecc_deg = exp.cfg.ecc_deg;
-exp.stim.fixcross_size_deg = [1 1];
+exp.stim.fixcross_size_deg = [.5 .5];
 exp.stim.pos_rot = pi/4;  % position of the stimuli in radians
 % convert sizes in pixels
 exp.stim.size_pix = round(exp.screen.deg2p * ...

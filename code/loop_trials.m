@@ -11,6 +11,12 @@ try
     block = make_block(exp.cfg);
     header = block(1, :);
     blockInfo = block(2:end, :);
+   
+    % reduce ntrials if debug
+    if exp.cfg.debug 
+        blockInfo = blockInfo(1:10, :);
+    end
+    
     % display some greetings here
     show_text(psy.expWin, exp.cfg.msg_start, 1);
 
@@ -18,6 +24,7 @@ try
     ntrials = length(blockInfo);
     rts = zeros([ntrials, 1]);
     response = zeros([ntrials, 1]);
+
     for itrial = 1:length(blockInfo)
         % get some info on this trial
         trial = blockInfo(itrial, :);
@@ -38,9 +45,18 @@ try
             wait_response_text(psy.expWin, exp.cfg.msg_response, exp.cfg.button_ids);
     end % for itrial
 
+    % convert buttons to button names
+    response_label = cell(size(response));
+    for i = 1:length(response)
+       if response(i) == -1
+           response_label{i} = 'reject';
+       else
+           response_label{i} = KbName(response(i));
+       end
+    end
     % save results
     header_res = [header, 'rt', 'response'];
-    res = [blockInfo, num2cell([rts, response])];
+    res = [blockInfo, num2cell(rts), response_label];
     res = [header_res; res];
 catch exception
     %cleanup(psy);
@@ -92,6 +108,7 @@ function [rt, response] = wait_response_text(expWin, msg, button_ids)
 DrawFormattedText(expWin, msg, 'center', 'center');
 Screen('Flip', expWin);
 [~, t0, keyCode] = KbCheck;
+RT = t0;
 while ~any(keyCode(button_ids))
     DrawFormattedText(expWin, msg, 'center', 'center');
     Screen('Flip', expWin);
@@ -99,5 +116,11 @@ while ~any(keyCode(button_ids))
 end
 rt = RT - t0;
 response = find(keyCode);  % we'll figure out later
+
+% if the subject pressed both buttons, then discard this
+if length(response) == 2
+   response = -1; 
+end
+
 Screen('Flip', expWin);
 end
