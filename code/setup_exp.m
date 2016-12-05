@@ -15,14 +15,14 @@ exp.dir.stim = fullfile(fileparts(curdir), 'stim');
 exp.dir.res = fullfile(fileparts(curdir), 'res');
 
 % CFG
-exp.cfg.debug = 1;
+exp.cfg.debug = 0;
 exp.cfg.key_yes = KbName('LeftArrow');
 exp.cfg.key_no = KbName('RightArrow');
 exp.cfg.button_ids = [exp.cfg.key_yes, exp.cfg.key_no];
 exp.cfg.msg_start = ['Before each trial, press the space bar when you are ready.\n', ...
-                     'Use the left arrow key for Identity A, the right arrow key for Identity B\n\n', ...
+                     'Use the left arrow key for James, the right arrow key for Kevin\n\n', ...
                      'Press the space bar to start'];
-exp.cfg.msg_response = ['Left: Identity A     Right: Identity B'];
+exp.cfg.msg_response = ['Left: James     Right: Kevin'];
 
 % setup for blocks
 exp.cfg.angle_pos = 0:7;
@@ -48,17 +48,19 @@ if strcmp(computer, 'MACI64')
     exp.screen.resolution = [1440 900 0];
     exp.screen.actual_refresh = 60;
 else
-    exp.screen.resolution = [1024 768 60];
+    exp.screen.resolution = [1600 1200 60];
     exp.screen.actual_refresh = exp.screen.resolution(3);
 end
+
+% stereoscope room
 exp.screen.dist_cm = 50;  % distance subject-screen
-exp.screen.w_cm = 36.5;  % width of the screen in cm
-exp.screen.bg_color = [128 128 128];
+exp.screen.w_cm = 41; %36.5;  % width of the screen in cm
+exp.screen.bg_color = [0, 0, 0]; %[128 128 128];
 % convert visual angle -> pixel
 exp.screen.deg2p = angle2pix(1, exp.screen.dist_cm, exp.screen.w_cm, ...
                              exp.screen.resolution(1));
 % stimuli position
-exp.stim.size_deg = [3 3];
+exp.stim.size_deg = [4 4];
 exp.stim.ecc_deg = exp.cfg.ecc_deg;
 exp.stim.fixcross_size_deg = [.5 .5];
 exp.stim.pos_rot = pi/4;  % position of the stimuli in radians

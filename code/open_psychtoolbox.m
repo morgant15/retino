@@ -21,6 +21,14 @@ try
     
     % get midpoints of screen
     [psy.mx, psy.my] = RectCenter(psy.expRect);
+    ListenChar(2);
+    HideCursor();
+    
+    % get flip interval
+    exp.time.ifi = Screen('GetFlipInterval', psy.expWin);   
+    % Numer of frames to wait when specifying good timing
+    exp.time.waitframes = 1;
+
 catch exception
     cleanup(psy);
     throw(exception);
