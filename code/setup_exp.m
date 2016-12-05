@@ -31,7 +31,8 @@ exp.cfg.pos_deg = 0:7;  % in radians, pi/4
 exp.cfg.ecc_deg = [7];
 exp.cfg.nrep_in_block = 2;
 % Then, add stimulus name
-exp.cfg.fn = '%03d.png';  % e.g., 000.png, 050.png, 100.png morphs
+exp.cfg.fn = '%03d.jpg';  % e.g., 000.png, 050.png, 100.png morphs
+% exp.cfg.fn = 'kj_g_%d.jpg';  
 
 % block order is made on the fly
 % CSV storing trial info
