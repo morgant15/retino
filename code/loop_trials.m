@@ -42,7 +42,7 @@ try
             psy.rects{trial_angle}, exp.time.stim_f, exp.time.ifi);
         % 3. wait for response
         [rts(itrial), response(itrial)] = ...
-            wait_response_text(psy.expWin, exp.cfg.msg_response, exp.cfg.button_ids);
+            wait_response_text(psy.expWin, '', exp.cfg.button_ids);
     end % for itrial
 
     % convert buttons to button names
