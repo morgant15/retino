@@ -5,7 +5,7 @@ if nargin == 0
 else
     exp = varargin{1};
 end
-
+KbName('UnifyKeyNames');
 % setup directories variables
 myname = mfilename;
 mydir = which(myname);

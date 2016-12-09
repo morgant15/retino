@@ -28,7 +28,7 @@ try
     exp.time.ifi = Screen('GetFlipInterval', psy.expWin);   
     % Numer of frames to wait when specifying good timing
     exp.time.waitframes = 1;
-
+    
 catch exception
     cleanup(psy);
     throw(exception);
