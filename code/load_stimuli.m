@@ -11,7 +11,7 @@ try
     fn = exp.cfg.fn;
     for imorph = 1:n_morphs
        this_fn = sprintf(fn, morphs(imorph));
-       field_name = ['t', strrep(this_fn, '.png', '')];
+       field_name = ['t', strrep(this_fn, '.jpg', '')];
        img = imread(fullfile(exp.dir.stim, this_fn));
        psy.textures_name{imorph} = this_fn;
        psy.textures.(field_name) = Screen('MakeTexture', psy.expWin, img);

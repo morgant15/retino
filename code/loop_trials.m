@@ -39,10 +39,10 @@ try
             fixation(psy.expWin, psy.rect_fix, exp.time.fix_f);
         % 2. flash stimulus
         show_stim(psy.expWin, psy.textures.(this_fieldname), ...
-            psy.rects{trial_angle}, exp.time.stim_f);
+            psy.rects{trial_angle}, exp.time.stim_f, exp.time.ifi);
         % 3. wait for response
         [rts(itrial), response(itrial)] = ...
-            wait_response_text(psy.expWin, exp.cfg.msg_response, exp.cfg.button_ids);
+            wait_response_text(psy.expWin, '', exp.cfg.button_ids);
     end % for itrial
 
     % convert buttons to button names
@@ -66,7 +66,7 @@ end
 
 function show_text(expWin, msg, wait)
     Screen('TextSize', expWin, 18);
-    DrawFormattedText(expWin, msg, 'center', 'center');
+    DrawFormattedText(expWin, msg, 'center', 'center', [255, 255, 255]);
     Screen('Flip', expWin);
     if wait
       WaitSecs(1);
@@ -94,23 +94,23 @@ else
 end
 end % fixation
 
-function show_stim(expWin, texture, rect, duration_flip)
+function show_stim(expWin, texture, rect, duration_flip, ifi)
 Screen('DrawTexture', expWin, texture, [], rect);
-Screen('Flip', expWin);
+vbl = Screen('Flip', expWin);
 for kflip = 2:duration_flip
     Screen('DrawTexture', expWin, texture, [], rect);
-    Screen('Flip', expWin);
+    vbl = Screen('Flip', expWin, vbl + 0.5*ifi);
 end
-Screen('Flip', expWin);
+Screen('Flip', expWin, vbl + 0.5*ifi);
 end % show_stim
 
 function [rt, response] = wait_response_text(expWin, msg, button_ids)
-DrawFormattedText(expWin, msg, 'center', 'center');
+DrawFormattedText(expWin, msg, 'center', 'center', [255, 255, 255]);
 Screen('Flip', expWin);
 [~, t0, keyCode] = KbCheck;
 RT = t0;
 while ~any(keyCode(button_ids))
-    DrawFormattedText(expWin, msg, 'center', 'center');
+    DrawFormattedText(expWin, msg, 'center', 'center', [255, 255, 255]);
     Screen('Flip', expWin);
     [~, RT, keyCode] = KbCheck;
 end
